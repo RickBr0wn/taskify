@@ -7,11 +7,16 @@ import ScreenSizeIndicator from '~/components/toolkit-components/screen-size-ind
 import NavBar from '~/components/toolkit-components/nav-bar'
 import { Toaster } from '~/components/ui/toaster'
 import { TooltipProvider } from '~/components/ui/tooltip'
+import { siteConfigData } from '~/config/site'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'A shadcn-ui and next-14 starter',
+  title: {
+    default: siteConfigData.name,
+    template: `%s | ${siteConfigData.name}`,
+  },
+  description: siteConfigData.description,
 }
 
 export default function RootLayout({
@@ -36,7 +41,7 @@ export default function RootLayout({
           <TooltipProvider>
             <ScreenSizeIndicator />
             <NavBar />
-            <div className="container mt-10">{children}</div>
+            <div>{children}</div>
             <Toaster />
           </TooltipProvider>
         </ThemeProvider>
