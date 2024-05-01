@@ -1,15 +1,15 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Roboto } from 'next/font/google'
 import './globals.css'
 import { cn } from '~/lib/utils'
-import { ThemeProvider } from '~/components/toolkit-components/theme-provider'
 import ScreenSizeIndicator from '~/components/toolkit-components/screen-size-indicator'
 import NavBar from '~/components/toolkit-components/nav-bar'
-import { Toaster } from '~/components/ui/toaster'
-import { TooltipProvider } from '~/components/ui/tooltip'
 import { siteConfigData } from '~/config/site'
+import { ReactNode } from 'react'
+import Providers from '~/components/toolkit-components/providers'
+import { ThemeProvider } from '~/components/toolkit-components/theme-provider'
 
-const inter = Inter({ subsets: ['latin'] })
+// const inter = Inter({ subsets: ['latin'], display: 'swap' })
 
 export const metadata: Metadata = {
   title: {
@@ -19,31 +19,29 @@ export const metadata: Metadata = {
   description: siteConfigData.description,
 }
 
+const roboto = Roboto({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+})
+
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+}: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          'min-h-screen bg-background font-sans antialiased',
-          inter.className
-        )}
-      >
+      <body className={roboto.className}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <TooltipProvider>
+          <Providers>
             <ScreenSizeIndicator />
             <NavBar />
             <div>{children}</div>
-            <Toaster />
-          </TooltipProvider>
+          </Providers>
         </ThemeProvider>
       </body>
     </html>
@@ -51,5 +49,5 @@ export default function RootLayout({
 }
 
 // Path: app/layout.tsx
+// Created at: 17:26:54 - 29/04/2024
 // Language: Typescript
-// Framework: React/Next.js
